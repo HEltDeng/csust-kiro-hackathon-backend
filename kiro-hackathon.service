@@ -1,0 +1,25 @@
+[Unit]
+Description=Changsha Kiro hackathon registration
+After=network.target
+
+[Service]
+Type=simple
+DynamicUser=yes
+StateDirectory=kiro-hackathon
+StateDirectoryMode=0700
+UMask=0077
+Environment=KIRO_DATABASE=/var/lib/kiro-hackathon/registrations.sqlite3
+Environment=KIRO_REGISTRATION_OPEN=1
+Environment=KIRO_PORT=8826
+Environment=KIRO_ALLOWED_ORIGINS=https://mychangliapp.cn,https://www.mychangliapp.cn
+ExecStart=/usr/bin/python3 /opt/kiro-hackathon/server.py
+Restart=on-failure
+RestartSec=2
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectHome=yes
+ProtectSystem=strict
+RestrictAddressFamilies=AF_INET AF_INET6
+
+[Install]
+WantedBy=multi-user.target
